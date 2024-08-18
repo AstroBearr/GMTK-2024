@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccrsehafnmxyc"]
+
+[ext_resource type="PackedScene" uid="uid://bcq8smegw4hcj" path="res://Module/module.tscn" id="1_5tpnq"]
+[ext_resource type="Script" path="res://Module/Shape Module/shape_module.gd" id="2_r2leb"]
+
+[node name="Shape Module" instance=ExtResource("1_5tpnq")]
+gravity_scale = 0.0
+freeze = true
+script = ExtResource("2_r2leb")

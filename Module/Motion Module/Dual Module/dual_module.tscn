@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8a5t7ck36uri"]
+
+[ext_resource type="Script" path="res://Module/Motion Module/Dual Module/dual_module.gd" id="2_kxdqi"]
+
+[node name="Dual Module" type="Node3D" groups=["Module"]]
+script = ExtResource("2_kxdqi")

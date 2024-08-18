@@ -1,0 +1,57 @@
+[gd_scene load_steps=11 format=3 uid="uid://b45a1fqcqb537"]
+
+[ext_resource type="Script" path="res://Build Mode/build_mode.gd" id="1_caqpf"]
+[ext_resource type="Texture2D" uid="uid://54wjjlrsfl4x" path="res://Prototype Textures/texture_02.svg" id="1_y8ejt"]
+[ext_resource type="Script" path="res://Build Mode/camera_controler.gd" id="2_pflyy"]
+[ext_resource type="PackedScene" uid="uid://b5323b3su4cyd" path="res://Module/Shape Module/Brain Module/brain_module.tscn" id="3_athb1"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_cbo5h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mf6q3"]
+albedo_texture = ExtResource("1_y8ejt")
+uv1_scale = Vector3(2500, 2500, 2500)
+uv1_offset = Vector3(0.25, 0.25, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_25c61"]
+material = SubResource("StandardMaterial3D_mf6q3")
+size = Vector2(5000, 5000)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vosad"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_klnt8"]
+sky_material = SubResource("ProceduralSkyMaterial_vosad")
+
+[sub_resource type="Environment" id="Environment_32a8q"]
+background_mode = 2
+sky = SubResource("Sky_klnt8")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Build Mode" type="Node3D"]
+script = ExtResource("1_caqpf")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("WorldBoundaryShape3D_cbo5h")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_25c61")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 10, 10)
+script = ExtResource("2_pflyy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_32a8q")
+
+[node name="Megatron" type="Node3D" parent="."]
+
+[node name="Brain Module" parent="Megatron" instance=ExtResource("3_athb1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)

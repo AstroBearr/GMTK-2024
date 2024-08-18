@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://8401oj50v4ie"]
+
+[ext_resource type="PackedScene" uid="uid://c8a5t7ck36uri" path="res://Module/Motion Module/Dual Module/dual_module.tscn" id="1_3lcd1"]
+[ext_resource type="Script" path="res://Module/Motion Module/Dual Module/Motor Module/motor_module.gd" id="2_1majq"]
+[ext_resource type="PackedScene" uid="uid://cyb0ki1u3djji" path="res://Module/Shape Module/Cylinder Module/cylinder_module.tscn" id="3_dyrge"]
+
+[node name="Motor Module" instance=ExtResource("1_3lcd1")]
+script = ExtResource("2_1majq")
+motion_parameters = {
+"speed": 100.0
+}
+keybinds = Array[int]([87])
+
+[node name="Body" parent="." index="0" instance=ExtResource("3_dyrge")]
+scale_x = 1.0
+scale_y = 1.0
+
+[node name="Shaft" parent="." index="1" instance=ExtResource("3_dyrge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+scale_x = 0.2
+scale_y = 1.0
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, 0)
+node_a = NodePath("../Body")
+node_b = NodePath("../Shaft")
+motor/enable = true

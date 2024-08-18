@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5323b3su4cyd"]
+
+[ext_resource type="PackedScene" uid="uid://ccrsehafnmxyc" path="res://Module/Shape Module/shape_module.tscn" id="1_ootla"]
+[ext_resource type="Script" path="res://Module/Shape Module/Brain Module/brain_module.gd" id="2_wml7l"]
+
+[node name="Brain Module" instance=ExtResource("1_ootla")]
+freeze_mode = 0
+script = ExtResource("2_wml7l")

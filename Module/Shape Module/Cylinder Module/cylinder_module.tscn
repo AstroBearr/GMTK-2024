@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyb0ki1u3djji"]
+
+[ext_resource type="PackedScene" uid="uid://ccrsehafnmxyc" path="res://Module/Shape Module/shape_module.tscn" id="1_p8w06"]
+[ext_resource type="Script" path="res://Module/Shape Module/Cylinder Module/cylinder_module.gd" id="2_41cli"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3qkgs"]
+height = 1.0
+radius = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2s40t"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 1.0
+
+[node name="Cylinder Module" instance=ExtResource("1_p8w06")]
+mass = 3.1415
+freeze_mode = 0
+script = ExtResource("2_41cli")
+scale_x = 1.0
+scale_y = 1.0
+
+[node name="CollisionShape3D" parent="." index="0"]
+shape = SubResource("CylinderShape3D_3qkgs")
+
+[node name="MeshInstance3D" parent="." index="1"]
+mesh = SubResource("CylinderMesh_2s40t")

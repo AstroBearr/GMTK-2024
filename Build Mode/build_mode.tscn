@@ -1,0 +1,204 @@
+[gd_scene load_steps=13 format=3 uid="uid://b45a1fqcqb537"]
+
+[ext_resource type="Script" path="res://Build Mode/build_mode.gd" id="1_caqpf"]
+[ext_resource type="Texture2D" uid="uid://54wjjlrsfl4x" path="res://Prototype Textures/texture_02.svg" id="1_y8ejt"]
+[ext_resource type="Script" path="res://Build Mode/camera_controler.gd" id="2_pflyy"]
+[ext_resource type="PackedScene" uid="uid://b5323b3su4cyd" path="res://Module/Shape Module/Brain Module/brain_module.tscn" id="3_athb1"]
+[ext_resource type="PackedScene" uid="uid://ig3kfbq1il7p" path="res://Module/Shape Module/Quad Module/quad_module.tscn" id="5_ayjcb"]
+[ext_resource type="Texture2D" uid="uid://cv1jbgcrdwmsn" path="res://icon.svg" id="6_6e4l5"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_cbo5h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mf6q3"]
+albedo_texture = ExtResource("1_y8ejt")
+uv1_scale = Vector3(2500, 2500, 2500)
+uv1_offset = Vector3(0.25, 0.25, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_25c61"]
+material = SubResource("StandardMaterial3D_mf6q3")
+size = Vector2(5000, 5000)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vosad"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_klnt8"]
+sky_material = SubResource("ProceduralSkyMaterial_vosad")
+
+[sub_resource type="Environment" id="Environment_32a8q"]
+background_mode = 2
+sky = SubResource("Sky_klnt8")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Build Mode" type="Node3D"]
+script = ExtResource("1_caqpf")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("WorldBoundaryShape3D_cbo5h")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_25c61")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 10, 10)
+script = ExtResource("2_pflyy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_32a8q")
+
+[node name="Megatron" type="Node3D" parent="."]
+
+[node name="Quad Module" parent="Megatron" instance=ExtResource("5_ayjcb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000702173, 3.50841, -0.00506103)
+mass = 14.5635
+gravity_scale = 1.0
+scale_x = 6.7
+scale_y = 1.685
+scale_z = 1.29
+
+[node name="Brain Module" parent="Megatron" instance=ExtResource("3_athb1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.07382, 0)
+gravity_scale = 1.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainBar" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.216929, 0.509598, 0.62609, 1)
+
+[node name="ToolBar" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.65
+anchor_right = 0.3
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.215686, 0.509804, 0.627451, 1)
+
+[node name="InspectorBar" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.3
+anchor_bottom = 0.65
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.215686, 0.509804, 0.627451, 1)
+
+[node name="EditMode" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.65
+anchor_right = 0.3
+anchor_bottom = 0.8
+offset_top = -3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SelectMode" type="MarginContainer" parent="Control/EditMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SelectMode" type="TextureButton" parent="Control/EditMode/SelectMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("6_6e4l5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MoveMode" type="MarginContainer" parent="Control/EditMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="MoveMode" type="TextureButton" parent="Control/EditMode/MoveMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("6_6e4l5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RotateMode" type="MarginContainer" parent="Control/EditMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RotateMode" type="TextureButton" parent="Control/EditMode/RotateMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("6_6e4l5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Module" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="QuadModule" type="MarginContainer" parent="Control/Module"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="QuadModule" type="TextureButton" parent="Control/Module/QuadModule"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("6_6e4l5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Inspector" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.3
+anchor_bottom = 0.65
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ModuleName" type="Label" parent="Control/Inspector"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 51
+text = "Motor Module"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HSlider" type="HSlider" parent="Control/Inspector"]
+layout_mode = 2
+min_value = 0.5
+max_value = 10.0
+step = 0.001
+value = 0.5
+
+[connection signal="pressed" from="Control/EditMode/SelectMode/SelectMode" to="." method="_on_select_pressed"]
+[connection signal="pressed" from="Control/EditMode/MoveMode/MoveMode" to="." method="_on_move_pressed"]
+[connection signal="pressed" from="Control/EditMode/RotateMode/RotateMode" to="." method="_on_rotate_pressed"]
+[connection signal="button_down" from="Control/Module/QuadModule/QuadModule" to="." method="_on_quad_module_button_down"]

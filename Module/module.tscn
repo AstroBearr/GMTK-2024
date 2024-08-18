@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://bcq8smegw4hcj"]
+
+[ext_resource type="Script" path="res://Module/module.gd" id="1_wdgwq"]
+[ext_resource type="Texture2D" uid="uid://54wjjlrsfl4x" path="res://Prototype Textures/texture_02.svg" id="2_ei5r3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rh23s"]
+size = Vector3(1, 1.00085, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wjhe4"]
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = ExtResource("2_ei5r3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6hnyy"]
+albedo_texture = ExtResource("2_ei5r3")
+
+[sub_resource type="BoxMesh" id="BoxMesh_46vnx"]
+material = SubResource("StandardMaterial3D_6hnyy")
+
+[node name="Module" type="RigidBody3D" groups=["Module"]]
+gravity_scale = 0.0
+freeze_mode = 1
+script = ExtResource("1_wdgwq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_rh23s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_wjhe4")
+mesh = SubResource("BoxMesh_46vnx")
